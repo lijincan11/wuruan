@@ -48,5 +48,20 @@ public class TestController {
 		
 		return (int)(1+Math.random()*(100000-1+1))+"";
 	}
+	
+	
+	@RequestMapping("/chufa/{num1}/{num2}")
+	public String getRandom(@PathVariable("num1") double num1 ,@PathVariable("num2") double num2){
+		double res=0;//  定义一个结果
+		
+		
+		if(num2==0){
+			return "被除数不能等于0";
+		}
+		
+		res=num1/num2;
+		
+		return num1+" 除以 "+num2+"等于:"+res;
+	}
 
 }
