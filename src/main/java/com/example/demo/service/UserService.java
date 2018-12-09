@@ -35,11 +35,14 @@ public class UserService {
 		if (num == 1) {
 			int num2 = userDao.login(user);
 			if (num2 == 1) {
-				rsp.setStatus(0);
-				rsp.setTip("登陆成功");
+//				rsp.setStatus(0);
+//				rsp.setTip("登陆成功");
+//				return new Rsp(0, "登陆成功");
+				return Rsp.Success();
 			} else {
-				rsp.setStatus(1);
-				rsp.setTip("用户名或者密码不正确");
+//				rsp.setStatus(1);
+//				rsp.setTip("用户名或者密码不正确");
+				return Rsp.Fail();
 			}
 		} else {
 			rsp.setStatus(2);
