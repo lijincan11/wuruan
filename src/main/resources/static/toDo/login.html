@@ -16,6 +16,8 @@
 		
 		<input type="button" @click="login()"  value="登陆"/>
 		
+		<input type="button" @click="toRegister"  value="没有账号,去注册"/>
+		
 		<!--控制台:username:{{username}}  password:{{password}}-->
 			
 			 
@@ -76,6 +78,10 @@
 				}else{
 					return true
 				}
+			},
+			toRegister:function(){
+				
+				window.location.href='register.html'
 			}
 		},
 		mounted:function(){

@@ -36,9 +36,6 @@ public interface UserDao {
 	@Select("select count(*) from users where username=#{username}")
 	int countUserName(@Param("username") String dasdas);
 	
-	//判断id,用户名是否已经存在
-	@Select("select count(*) from users where username=#{username}")
-	int countNameandId(@Param("username") String username,@Param("id") String id);
 	
 	
 }
