@@ -60,7 +60,12 @@ public class UserController {
 		return userService.login(user);
 	}
 	
-	
+	@RequestMapping("/register")
+	Rsp register(@RequestBody User user){
+		
+		
+		return userService.register(user);
+	}
 	
 	
 	

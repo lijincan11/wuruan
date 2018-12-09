@@ -44,6 +44,11 @@ public class UserService {
 		return rsp;
 	}
 
+	public Rsp register(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 	
