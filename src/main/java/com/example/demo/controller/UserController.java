@@ -62,11 +62,14 @@ public class UserController {
 	
 	
 	
+	
+	
 	@RequestMapping("/insertUser")
 	int insertUser(@RequestBody User user){
 		
 		return userDao.insertUser(user);
 	}
+	
 	
 	
 	
