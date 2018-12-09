@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dao.UserDao;
+import com.example.demo.model.Rsp;
 import com.example.demo.model.User;
+import com.example.demo.service.UserService;
 
 @RestController
 @CrossOrigin
@@ -23,6 +25,9 @@ public class UserController {
 	
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	UserService userService;
 
 	
 	
@@ -40,16 +45,31 @@ public class UserController {
 	
 	
 	
+	
+	
 	@RequestMapping("/deleteUser")
 	int deleteUser(@RequestBody User user){
 		
 		return userDao.deleteUser(user);
 	}
+	
+	@RequestMapping("/login")
+	Rsp login(@RequestBody User user){
+		
+		
+		return userService.login(user);
+	}
+	
+	
+	
+	
+	
 	@RequestMapping("/insertUser")
 	int insertUser(@RequestBody User user){
 		
 		return userDao.insertUser(user);
 	}
+	
 	
 	
 	
