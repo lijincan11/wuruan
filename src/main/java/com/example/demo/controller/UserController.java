@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dao.UserDao;
 import com.example.demo.model.Rsp;
 import com.example.demo.model.User;
-import com.example.demo.service.UserService;
+import com.example.demo.service.UserServiceImpl;
 
 @RestController
 @CrossOrigin
@@ -27,7 +27,7 @@ public class UserController {
 	UserDao userDao;
 	
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 
 	
 	

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.UserDao">
+
+<sql id="select_where">
+where
+		<trim prefixOverrides="and">
+		   <if test="id != null ">and id=#{id}</if>
+　　　　　　<if test="password != null and password.length()>0">and password = #{password}</if>
+　　　　　　<if test="username != null and username.length()>0" >and username = #{username}</if>
+      </trim>
+</sql>
+
+<sql id="select_table">
+	users
+</sql>
+<sql id="select_main">
+	select * from <include refid="select_table"></include> 
+</sql>
+<sql id="select_count">
+	select count(id) from <include refid="select_table"></include> 
+</sql>
+
+
+<select id="exist" resultType="int" parameterType="com.example.demo.model.User">
+<include refid="select_count"></include>
+<include refid="select_where"></include>
+</select>
+
+
+</mapper>

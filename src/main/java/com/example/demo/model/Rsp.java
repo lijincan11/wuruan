@@ -33,9 +33,15 @@ public class Rsp {
 		this.data = data;
 	}
 
-	public Rsp(int status, String tip) {
+	public Rsp(RspStatus statusEnum, String tip) {
 		super();
-		this.status = status;
+		this.status = statusEnum.getStatus();
+		this.tip = tip;
+	}
+	
+	public Rsp(String tip,Object data) {
+		super();
+		this.data = data;
 		this.tip = tip;
 	}
 
@@ -44,16 +50,25 @@ public class Rsp {
 	}
 	
 	
-	public static Rsp Success(){
-		Rsp rsp=new Rsp(0, "successs");
+	public static Rsp Success(String tip){
+		Rsp rsp=new Rsp(RspStatus.SUCCESS, tip);
 		return rsp;
 	}
 	
-	public static Rsp Fail(){
-		Rsp rsp=new Rsp(1, "fail");
+	public static Rsp Success(String tip,Object data){
+		Rsp rsp=new Rsp(tip, data);
 		return rsp;
 	}
 	
+	public static Rsp Fail(String tip){
+		Rsp rsp=new Rsp(RspStatus.GENERAL_FAIL, tip);
+		return rsp;
+	}
+	
+	public static Rsp Fail(RspStatus statusEnum,String tip){
+		Rsp rsp=new Rsp(statusEnum, tip);
+		return rsp;
+	}
 	
 
 	

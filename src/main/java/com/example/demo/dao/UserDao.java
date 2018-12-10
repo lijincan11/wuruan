@@ -35,6 +35,9 @@ public interface UserDao {
 	//判断 这个用户名在数据库中是否存在
 	@Select("select count(*) from users where username=#{username}")
 	int countUserName(@Param("username") String dasdas);
+
+
+	int exist(User user);
 	
 	
 	
