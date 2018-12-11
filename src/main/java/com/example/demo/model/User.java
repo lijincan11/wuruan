@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import javax.validation.constraints.NotBlank;
+
 public class User {
 
 	
@@ -7,6 +9,7 @@ public class User {
 	
 	private String password;
 	
+//	@NotBlank
 	private String id;
 
 	public String getUsername() {

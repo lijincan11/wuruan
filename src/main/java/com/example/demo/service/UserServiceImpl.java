@@ -17,35 +17,18 @@ public class UserServiceImpl implements UserService{
 	UserDao userDao;
 
 	/**
-	 * status 0:success 1:username or password not right 2:username not exist
-	 * 
-	 * @param user
-	 * @return
+	 * 登陆
 	 */
+	@Override
 	public Rsp login(User user) {
-		// num =1 表示 用户名存在
-//		int num = userDao.countUserName(user.getUsername());
-
-		if (exist(user)) {
-			int num2 = userDao.login(user);
-			if (num2 == 1) {
-				return Rsp.Success("登陆成功");
-			} else {
-				return Rsp.Fail("用户名或者密码不正确");
-			}
-		} else {
-			return Rsp.Fail(RspStatus.NO_AUTH, "用户名不存在");
-		}
-
+		return exist(user)?Rsp.Success("登陆成功"):
+			Rsp.Fail(RspStatus.NO_AUTH, "用户名或者密码不正确");
 	}
 
 	/**
-	 * status 0: 注册成功 1:username or password is null 2:username or is exit
-	 * 3:注册失败
-	 * 
-	 * @param user
-	 * @return
+	 * 注册
 	 */
+	@Override
 	public Rsp register(User user) {
 		Rsp rsp = new Rsp();
 		// num =1 表示 用户名和id存在
@@ -77,9 +60,11 @@ public class UserServiceImpl implements UserService{
 		return rsp;
 	}
 
+	/**
+	 * 判断用户是否存在
+	 */
 	@Override
 	public boolean exist(User user) {
-		// TODO Auto-generated method stub
 		return userDao.exist(user)==1;
 	}
 }

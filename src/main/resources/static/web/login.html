@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8" />
-		<title>toDo | 注册页</title>
+		<title>toDo | 登陆页</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
 		<script src="https://cdn.bootcss.com/vue/2.5.17/vue.js"></script>
 		<link href="https://cdn.bootcss.com/mui/3.7.1/css/mui.min.css" rel="stylesheet">
@@ -14,8 +14,9 @@
 		
 		密码:<input type="password" v-model="password" />
 		
-		<input type="button" @click="register"  value="注册"/>
-		<input type="button" @click="toLogin"  value="不了,直接去登陆"/>
+		<input type="button" @click="login()"  value="登陆"/>
+		
+		<input type="button" @click="toRegister"  value="没有账号,去注册"/>
 		
 		<!--控制台:username:{{username}}  password:{{password}}-->
 			
@@ -35,14 +36,14 @@
 			password:''
 		},
 		methods:{
-			register : function(){
+			login:function(){
 //				mui.toast('你点了登陆按钮')
 				if(!this.validate()){
 					return   //如果用户名和密码 校验不通过的时候 我们不往下执行  login  登陆方法
 				}
 
 				mui.ajax({
-				url : 'http://localhost:8888/user/register' ,
+				url : 'http://localhost:8888/toDoServer/user/login' ,
               type : 'post',
               headers: {
                  'Content-Type': 'application/json'
@@ -54,13 +55,12 @@
               timeout : 1000000,
               success : function(data){
               	
-//            	mui.toast(data.tip)
+              	mui.toast(data.tip)
 //            	mui.toast('前端的返回状态码：'+data.status)
 				if(data.status==0){
-					mui.toast('注册成功,3秒跳转到登陆页...')
-					setTimeout(function(){ window.location.href="login.html"; }, 3000);
+					window.location.href="main.html"
 				}else{
-					mui.toast(data.tip)
+					
 				}
               },
               error : function(xhr,type,errorThrown){
@@ -79,12 +79,13 @@
 					return true
 				}
 			},
-			toLogin:function(){
-				window.location.href="login.html";
+			toRegister:function(){
+				
+				window.location.href='register.html'
 			}
 		},
 		mounted:function(){
-			mui.toast('欢迎来到toDO网站注册页') 
+			mui.toast('欢迎来到toDO网站') 
 		}
 	})
 		

@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -54,7 +56,7 @@ public class UserController {
 	}
 	
 	@RequestMapping("/login")
-	Rsp login(@RequestBody User user){
+	Rsp login(@RequestBody @Valid User user){
 		
 		
 		return userService.login(user);
