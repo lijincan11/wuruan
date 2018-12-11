@@ -4,28 +4,29 @@
 <mapper namespace="com.example.demo.dao.UserDao">
 
 <sql id="select_where">
-where
-		<trim prefixOverrides="and">
-		   <if test="id != null ">and id=#{id}</if>
-　　　　　　<if test="password != null and password.length()>0">and password = #{password}</if>
-　　　　　　<if test="username != null and username.length()>0" >and username = #{username}</if>
-      </trim>
+<where>
+<if test="id != null and id !='' ">id=#{id}</if>
+<if test="username != null and username !='' ">and username=#{username}</if>
+<if test="password !=null and password !='' ">and password=#{password}</if>
+</where>
 </sql>
 
 <sql id="select_table">
-	users
+ users
 </sql>
 <sql id="select_main">
-	select * from <include refid="select_table"></include> 
+ select * from <include refid="select_table"></include> 
 </sql>
 <sql id="select_count">
-	select count(id) from <include refid="select_table"></include> 
+ select count(id) from <include refid="select_table"></include> 
 </sql>
 
 
 <select id="exist" resultType="int" parameterType="com.example.demo.model.User">
 <include refid="select_count"></include>
 <include refid="select_where"></include>
+ 
+
 </select>
 
 
