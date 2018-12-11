@@ -15,26 +15,26 @@ import com.example.demo.model.User;
 public interface UserDao {
 
 	
-	@Select("select * from users")
-	List<User> getAllUser();
-	
-	
-	@Update("update users set username=#{username} ,password=#{password} where id=#{id}")
-	int updateUser(User user);
-	
-	
-	@Delete("delete from users where id=#{id}")
-	int deleteUser(User user);
-	
-	@Insert("insert into users values(#{username},#{password},#{id})")
-	int insertUser(User user);
-
-	@Select("select count(*) from users where username=#{username} and password=#{password}")
-	int login(User user);
-
-	//判断 这个用户名在数据库中是否存在
-	@Select("select count(*) from users where username=#{username}")
-	int countUserName(@Param("username") String dasdas);
+//	@Select("select * from users")
+//	List<User> getAllUser();
+//	
+//	
+//	@Update("update users set username=#{username} ,password=#{password} where id=#{id}")
+//	int updateUser(User user);
+//	
+//	
+//	@Delete("delete from users where id=#{id}")
+//	int deleteUser(User user);
+//	
+//	@Insert("insert into users values(#{username},#{password},#{id})")
+//	int insertUser(User user);
+//
+//	@Select("select count(*) from users where username=#{username} and password=#{password}")
+//	int login(User user);
+//
+//	//判断 这个用户名在数据库中是否存在
+//	@Select("select count(*) from users where username=#{username}")
+//	int countUserName(@Param("username") String dasdas);
 
 
 	int exist(User user);
