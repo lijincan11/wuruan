@@ -39,6 +39,8 @@ public interface UserDao {
 
 	int exist(User user);
 	
+	int add(User user);
+	
 	
 	
 }

@@ -7,7 +7,18 @@ public class Rsp {
 	
 	private String tip;
 	
+	private String errorMsg;
+	
 	private Object data;
+	
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 
 	public int getStatus() {
 		return status;
@@ -37,6 +48,13 @@ public class Rsp {
 		super();
 		this.status = statusEnum.getStatus();
 		this.tip = tip;
+	}
+	
+	public Rsp(RspStatus statusEnum, String tip,String errorMsg) {
+		super();
+		this.status = statusEnum.getStatus();
+		this.tip = tip;
+		this.errorMsg=errorMsg;
 	}
 	
 	public Rsp(String tip,Object data) {
@@ -70,7 +88,12 @@ public class Rsp {
 		return rsp;
 	}
 	
-
+	public static Rsp Exception(RspStatus statusEnum,String errorMsg){
+		//TODO need fix
+		Rsp rsp=new Rsp(statusEnum, "服务器跑丢了", errorMsg);
+		return rsp;
+	}
+	
 	
 	
 	

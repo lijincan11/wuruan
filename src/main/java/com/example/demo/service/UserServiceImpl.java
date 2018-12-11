@@ -30,34 +30,19 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public Rsp register(User user) {
-		Rsp rsp = new Rsp();
-		// num =1 表示 用户名和id存在
-		int num = userDao.countUserName(user.getUsername());
 
-		if (isEmpty(user.getUsername()) || isEmpty(user.getPassword())) {
-			rsp.setStatus(2);
-			rsp.setTip("注册信息不能为空");
-			return rsp;
-		}
+//		if (isRegistered(user)) {
+//			return Rsp.Fail("该用户名已被注册");
+//		} else {
+//			if (addUser(user)) {
+//				return Rsp.Success("注册成功");
+//			} else {
+//				return Rsp.Fail("注册失败");
+//			}
+//		}
+		return !isRegistered(user)?(addUser(user)?
+				Rsp.Success("注册成功"):Rsp.Fail("注册失败")):Rsp.Fail("该用户名已被注册");
 
-		if (num == 1) {
-			rsp.setStatus(1);
-			rsp.setTip("该用户名已被注册");
-		} else {
-			user.setId(randomString());
-			int num2 = userDao.insertUser(user);
-
-			if (num2 == 1) {
-				rsp.setStatus(0);
-				rsp.setTip("注册成功");
-			} else {
-				rsp.setStatus(3);
-				rsp.setTip("注册失败");
-			}
-
-		}
-
-		return rsp;
 	}
 
 	/**
@@ -66,5 +51,25 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public boolean exist(User user) {
 		return userDao.exist(user)==1;
+	}
+
+	/**
+	 * 判断用户名是否背注册
+	 */
+	@Override
+	public boolean isRegistered(User user) {
+		User temp =new User();
+		temp.setUsername(user.getUsername());
+		user=null;//置空  让jvm 可以进行垃圾回收
+		return exist(temp);
+	}
+
+	/**
+	 * 向数据库添加一个用户
+	 */
+	@Override
+	public boolean addUser(User user) {
+		user.setId(randomString());
+		return userDao.add(user)==1;
 	}
 }

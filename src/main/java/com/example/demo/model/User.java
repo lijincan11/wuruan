@@ -4,12 +4,11 @@ import javax.validation.constraints.NotBlank;
 
 public class User {
 
-	
+	@NotBlank(message="用户名不能为空")
 	private String username;
 	
 	private String password;
 	
-//	@NotBlank
 	private String id;
 
 	public String getUsername() {

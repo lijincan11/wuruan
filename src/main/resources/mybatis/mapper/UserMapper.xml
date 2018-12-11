@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<!-- namespace 需要改成对应的mapper文件路径 -->
 <mapper namespace="com.example.demo.dao.UserDao">
-
+<!-- 需要维护的部分 根据对应的数据表和字段进行维护 -->
 <sql id="select_where">
 <where>
 <if test="id != null and id !='' ">id=#{id}</if>
@@ -11,23 +11,43 @@
 </where>
 </sql>
 
-<sql id="select_table">
+<sql id="insert_fields">
+<trim prefix="(" suffix=")" suffixOverrides=",">
+<if test="id != null and id !='' ">id,</if>
+<if test="username != null and username !='' ">username,</if>
+<if test="password !=null and password !='' ">password,</if>
+</trim>
+</sql>
+
+<sql id="insert_fields_value">
+<trim prefix="values(" suffix=")" suffixOverrides=",">
+<if test="id != null and id !='' ">#{id},</if>
+<if test="username != null and username !='' ">#{username},</if>
+<if test="password !=null and password !='' ">#{password},</if>
+</trim>
+</sql>
+
+<sql id="table">
  users
 </sql>
+
 <sql id="select_main">
- select * from <include refid="select_table"></include> 
+ select * from <include refid="table"></include> 
 </sql>
 <sql id="select_count">
- select count(id) from <include refid="select_table"></include> 
+ select count(id) from <include refid="table"></include> 
 </sql>
 
 
 <select id="exist" resultType="int" parameterType="com.example.demo.model.User">
 <include refid="select_count"></include>
 <include refid="select_where"></include>
- 
-
 </select>
+
+<insert id="add">
+insert into <include refid="table"></include><include refid="insert_fields"></include>
+<include refid="insert_fields_value"></include>
+</insert>
 
 
 </mapper>

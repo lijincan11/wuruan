@@ -13,4 +13,8 @@ public interface UserService {
 	
 	boolean exist(User user);
 	
+	boolean isRegistered(User user);
+	
+	boolean addUser(User user);
+	
 }
