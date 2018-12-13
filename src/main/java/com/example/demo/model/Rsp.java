@@ -40,8 +40,9 @@ public class Rsp {
 		return data;
 	}
 
-	public void setData(Object data) {
+	public Rsp setData(Object data) {
 		this.data = data;
+		return this;
 	}
 
 	public Rsp(RspStatus statusEnum, String tip) {
@@ -90,7 +91,7 @@ public class Rsp {
 	
 	public static Rsp Exception(RspStatus statusEnum,String errorMsg){
 		//TODO need fix
-		Rsp rsp=new Rsp(statusEnum, "服务器跑丢了", errorMsg);
+		Rsp rsp=new Rsp(statusEnum, "服务器跑丢了...", errorMsg);
 		return rsp;
 	}
 	

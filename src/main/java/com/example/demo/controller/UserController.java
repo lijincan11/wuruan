@@ -22,7 +22,7 @@ public class UserController {
 	
 	
 	@RequestMapping("/login")
-	Rsp login(@RequestBody @Valid User user){
+	Rsp login(@RequestBody @Valid User user) throws Exception{
 		return userService.login(user);
 	}
 	

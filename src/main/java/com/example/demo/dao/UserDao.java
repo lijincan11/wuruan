@@ -40,6 +40,10 @@ public interface UserDao {
 	int exist(User user);
 	
 	int add(User user);
+
+	List<User> getSome(User user);
+
+	User getOne(User user);
 	
 	
 	

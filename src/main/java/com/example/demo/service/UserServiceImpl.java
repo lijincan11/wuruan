@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static org.springframework.util.StringUtils.*;
 
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
 import com.example.demo.dao.UserDao;
 import com.example.demo.model.Rsp;
 import com.example.demo.model.RspStatus;
+import com.example.demo.model.TokenFactory;
 import com.example.demo.model.User;
 import static com.example.demo.util.UUIDUtil.*;
 
@@ -18,11 +22,14 @@ public class UserServiceImpl implements UserService{
 
 	/**
 	 * 登陆
+	 * @throws UnsupportedEncodingException 
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
 	 */
 	@Override
-	public Rsp login(User user) {
-		return exist(user)?Rsp.Success("登陆成功"):
-			Rsp.Fail(RspStatus.NO_AUTH, "用户名或者密码不正确");
+	public Rsp login(User user) throws Exception {
+		String token=TokenFactory.createToken(getOne(user));
+		return exist(user)?Rsp.Success("登陆成功").setData(token):Rsp.Fail(RspStatus.NO_AUTH, "用户名或者密码不正确");
 	}
 
 	/**
@@ -40,6 +47,7 @@ public class UserServiceImpl implements UserService{
 //				return Rsp.Fail("注册失败");
 //			}
 //		}
+		user.setRole_id("GENERAL_USER");
 		return !isRegistered(user)?(addUser(user)?
 				Rsp.Success("注册成功"):Rsp.Fail("注册失败")):Rsp.Fail("该用户名已被注册");
 
@@ -71,5 +79,17 @@ public class UserServiceImpl implements UserService{
 	public boolean addUser(User user) {
 		user.setId(randomString());
 		return userDao.add(user)==1;
+	}
+
+	@Override
+	public User getOne(User user) {
+		// TODO Auto-generated method stub
+		return userDao.getOne(user);
+	}
+
+	@Override
+	public List<User> getSome(User user) {
+		// TODO Auto-generated method stub
+		return userDao.getSome(user);
 	}
 }

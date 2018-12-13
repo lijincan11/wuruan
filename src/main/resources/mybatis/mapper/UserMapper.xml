@@ -3,11 +3,19 @@
 <!-- namespace 需要改成对应的mapper文件路径 -->
 <mapper namespace="com.example.demo.dao.UserDao">
 <!-- 需要维护的部分 根据对应的数据表和字段进行维护 -->
+<sql id="sql_base">
+<if test="id != null and id !='' ">id=#{id}</if>
+<if test="username != null and username !='' ">and username=#{username}</if>
+<if test="password !=null and password !='' ">and password=#{password}</if>
+<if test="role_id !=null and role_id !='' ">and role_id=#{role_id}</if>
+</sql>
+
 <sql id="select_where">
 <where>
 <if test="id != null and id !='' ">id=#{id}</if>
 <if test="username != null and username !='' ">and username=#{username}</if>
 <if test="password !=null and password !='' ">and password=#{password}</if>
+<if test="role_id !=null and role_id !='' ">and role_id=#{role_id}</if>
 </where>
 </sql>
 
@@ -16,6 +24,7 @@
 <if test="id != null and id !='' ">id,</if>
 <if test="username != null and username !='' ">username,</if>
 <if test="password !=null and password !='' ">password,</if>
+<if test="role_id !=null and role_id !='' ">role_id,</if>
 </trim>
 </sql>
 
@@ -24,6 +33,7 @@
 <if test="id != null and id !='' ">#{id},</if>
 <if test="username != null and username !='' ">#{username},</if>
 <if test="password !=null and password !='' ">#{password},</if>
+<if test="role_id !=null and role_id !='' ">#{role_id}</if>
 </trim>
 </sql>
 
@@ -48,6 +58,16 @@
 insert into <include refid="table"></include><include refid="insert_fields"></include>
 <include refid="insert_fields_value"></include>
 </insert>
+
+<select id="getSome" resultType="com.example.demo.model.User" parameterType="com.example.demo.model.User">
+<include refid="select_main"></include>
+<include refid="select_where"></include>
+</select>
+
+<select id="getOne" resultType="com.example.demo.model.User" parameterType="com.example.demo.model.User">
+<include refid="select_main"></include>
+<include refid="select_where"></include> limit 0,1
+</select>
 
 
 </mapper>
