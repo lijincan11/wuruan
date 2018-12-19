@@ -24,6 +24,8 @@ public class ExceptionHandle {
 			 return Rsp.Exception(RspStatus.BAD_USER_INFO, "用户信息不完整");
 		 }else if(e instanceof UnsupportedEncodingException){
 			 return Rsp.Exception(RspStatus.SERVER_ERROR, "token加密或解密失败");
+		 }else if(e instanceof AppHttpException){//处理自定义异常
+			 return Rsp.Exception(((AppHttpException) e).getStatus(), e.getMessage());
 		 }else{
 			 return Rsp.Fail(RspStatus.UN_KNOW_ERROR, "服务器跑丢了...");
 		 }

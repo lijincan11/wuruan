@@ -79,8 +79,8 @@ public class TokenFactory {
 	
 	public static String createToken(User user) throws IllegalArgumentException, IllegalAccessException, UnsupportedEncodingException{
 		
-//		p(createUserInfoStr(user));
-		String sourceString=createUserInfoStr(user)+"&"+createInspiredTimestamp(user);
+		//用户信息&有效期的时间戳&口令 = token 明文
+		String sourceString=createUserInfoStr(user)+"&"+createInspiredTimestamp(user)+"&"+PASS;
 //		encrypt(sourceString, PASS);
 		return encrypt(sourceString, PASS);
 	}
@@ -104,6 +104,31 @@ public class TokenFactory {
 		
 		return res;
 	}
+	
+	public static boolean validateToken(String token) throws Exception{
+		//TODO  
+		token=decrypt(token, PASS);//将token转换为明文
+		if(!isInspired(token)){
+			throw new AppHttpException(RspStatus.NO_AUTH, "token 已经过期");
+		}else if(!isValid(token)){
+			throw new AppHttpException(RspStatus.BAD_AUTH, "不合法或无效的 token");
+		}
+		return true;
+	}
+	
+	// 校验token 有效时间  接受一个解密后的token
+	public static boolean isInspired(String token){
+		String[] strs=token.split("&");
+		//用户信息&有效期的时间戳&口令
+		return Long.parseLong(strs[1])>System.currentTimeMillis();
+	}
+	
+	// 校验token 是否有效 接受一个解密后的token
+		public static boolean isValid(String token){
+			String[] strs=token.split("&");
+			//用户信息&有效期的时间戳&口令
+			return strs[2].equals(PASS);
+		}
 	
 	
 	

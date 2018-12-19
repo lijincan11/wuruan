@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService{
 	 */
 	@Override
 	public Rsp login(User user) throws Exception {
-		String token=TokenFactory.createToken(getOne(user));
-		return exist(user)?Rsp.Success("登陆成功").setData(token):Rsp.Fail(RspStatus.NO_AUTH, "用户名或者密码不正确");
+		return exist(user)?Rsp.Success("登陆成功").setData(TokenFactory.createToken(getOne(user)))
+				:Rsp.Fail(RspStatus.NO_AUTH, "用户名或者密码不正确");
 	}
 
 	/**
