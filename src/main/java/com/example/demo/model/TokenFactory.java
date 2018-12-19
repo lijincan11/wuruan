@@ -3,6 +3,13 @@ package com.example.demo.model;
 import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import static com.example.demo.util.PassUtil.*;
 
@@ -12,6 +19,7 @@ import static com.example.demo.util.PrintUtil.*;
 
 public class TokenFactory {
 	
+	public static Map<String, User> USER_MAP=new HashMap<String, User>();
 	
 	public final static  String ANNOTATION_TOKEN_INCLUDE_NAME="TokenInclude";
 	public final static long SYS_ADMIN_TOKEN_INSPIRE_TIME=30*60*1000; //管理员token 有效期 30分钟
@@ -49,9 +57,6 @@ public class TokenFactory {
 		return false;
 	}
 	
-//	public static String getFieldName(Field field,Object obj){
-//		
-//	}
 	
 	public static Object getFieldValue(Field field,Object obj) throws IllegalArgumentException, IllegalAccessException{
 		field.getGenericType();
@@ -75,12 +80,20 @@ public class TokenFactory {
 		return res;
 	}
 	
-	
+	public static User getUser() throws UnsupportedEncodingException{
+		
+		HttpServletRequest request = ((ServletRequestAttributes)
+				RequestContextHolder.getRequestAttributes()).getRequest();
+		
+		return USER_MAP.get(decrypt(request.getHeader(AuthHandler.AUTH_TOKEN_NAME), PASS));
+	}
 	
 	public static String createToken(User user) throws IllegalArgumentException, IllegalAccessException, UnsupportedEncodingException{
 		
 		//用户信息&有效期的时间戳&口令 = token 明文
 		String sourceString=createUserInfoStr(user)+"&"+createInspiredTimestamp(user)+"&"+PASS;
+		//将userInfo 放入usermap中
+		USER_MAP.put(sourceString, user);
 //		encrypt(sourceString, PASS);
 		return encrypt(sourceString, PASS);
 	}
@@ -109,6 +122,7 @@ public class TokenFactory {
 		//TODO  
 		token=decrypt(token, PASS);//将token转换为明文
 		if(!isInspired(token)){
+			USER_MAP.remove(token);//移除  userinfo
 			throw new AppHttpException(RspStatus.NO_AUTH, "token 已经过期");
 		}else if(!isValid(token)){
 			throw new AppHttpException(RspStatus.BAD_AUTH, "不合法或无效的 token");

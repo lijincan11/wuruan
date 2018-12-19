@@ -7,7 +7,7 @@ import static org.springframework.util.StringUtils.*;
 
 public class AuthHandler extends BaseHandler{
 	
-	private final static String AUTH_TOKEN_NAME="auth";
+	public final static String AUTH_TOKEN_NAME="auth";
 
 	@Override
 	public BaseHandler setReq(HttpServletRequest req) {
